@@ -5,9 +5,12 @@ var mainState = {
         game.load.image('flag', 'assets/Flaggy_Flag_Fixed.png');
         game.load.audio('jump_audio', 'assets/jump_sound.wav');
         game.load.audio('hit_audio', 'assets/grey_mad.wav');
+        game.load.image('background', 'assets/London_Night_Background.png');
     },
 
     create: function() {
+        
+        game.add.sprite(0, 0, 'background');
         // Set betweenTime to be 0 to avoid null error later on
         this.betweenTime = 0;
 
