@@ -1,3 +1,7 @@
+// TODO: Add mute for sounds
+// TODO: Add mute for music
+// TODO: Use all rebel flags in the flag columns, not just Flaggy Flag
+
 var theGame = function(game) {}
 
 theGame.prototype = {
@@ -6,8 +10,6 @@ theGame.prototype = {
         this.game.add.sprite(0, 0, 'background');
         // Set betweenTime to be 0 to avoid null error later on
         this.betweenTime = 0;
-
-//        game.stage.backgroundColor = '#71c5cf';
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -33,11 +35,15 @@ theGame.prototype = {
         this.score = 0;
         this.labelScore = this.game.add.text(20, 20, "0", {
             font: "30px Arial",
-            fill: "FFFFFF"
+            fill: "#FFF"
         });
 
         this.jumpSound = this.game.add.audio('jump_audio');
         this.hitSound = this.game.add.audio('hit_audio');
+        this.background_music = this.game.add.audio('background_music');
+        this.outOfBoundsSound = this.game.add.audio('out_of_bounds_audio');
+
+        this.background_music.play("", 0, 0.1, true, true);
 
         // Boolean which checks if Grey is between the flags or not
         this.isBetween = false;
@@ -46,6 +52,9 @@ theGame.prototype = {
     update: function() {
         this.FLAG_WIDTH = 70;
         if (this.grey_head.y < 0 || this.grey_head.y > 490) {
+            if (this.grey_head.alive) {
+                this.outOfBoundsSound.play();
+            }
             this.restartGame();
         }
 
@@ -107,7 +116,8 @@ theGame.prototype = {
     },
 
     restartGame: function() {
-        this.game.state.start('main');
+        this.background_music.stop();
+        this.game.state.start("GameOver", true, false, this.score);
     },
 
     addOneFlag: function(x, y) {
@@ -135,11 +145,12 @@ theGame.prototype = {
     },
 
     hitFlags: function() {
+        var firstTime = Date.now();
         // If Grey is not alive, then ignore the hitting of flags
         if (this.grey_head.alive == false) {
             return;
         }
-
+        this.background_music.stop();
         this.hitSound.play();
 
         this.grey_head.alive = false;
@@ -159,6 +170,9 @@ theGame.prototype = {
             f.body.velocity.x = 0;
         }, this);
         
-        this.game.state.start("GameOver", true, false, this.score);
+        if (Date.now() - firstTime > 5000) {
+            this.background_music.stop();
+            this.game.state.start("GameOver", true, false, this.score);
+        }
     }
 }
