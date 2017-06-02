@@ -1,6 +1,7 @@
 // TODO: Add mute for sounds
 // TODO: Add mute for music
-// TODO: Use all rebel flags in the flag columns, not just Flaggy Flag
+// TODO: Add mobile integration
+// TODO: Add ability to go above screen without immediately dying but not go over flags
 
 var theGame = function(game) {}
 
@@ -26,6 +27,11 @@ theGame.prototype = {
 
         var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);
+        
+        if (this.game.input.activePointer.isDown)
+        {
+            this.jump();
+        }
 
         this.flags = this.game.add.group();
 
@@ -121,9 +127,13 @@ theGame.prototype = {
     },
 
     addOneFlag: function(x, y) {
+        // Create a random number between 1 and 4 inclusive since there are
+        // four rebel flags and then concatenate the random number to "flag"
+        // so that a pseudo-random flag will be called each time
+        var randomNumber = Math.floor(Math.random() * 4 + 1);
         // Create a flag at x, y
-        var flag = this.game.add.sprite(x, y, 'flag');
-
+        var flag = this.game.add.sprite(x, y, 'flag' + randomNumber);
+        
         this.flags.add(flag);
 
         this.game.physics.arcade.enable(flag);

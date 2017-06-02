@@ -15,7 +15,11 @@ preload.prototype = {
         loadingBar.anchor.setTo(0.5,0.5);
         this.load.setPreloadSprite(loadingBar);
         this.game.load.image('play_button', 'assets/shrink_play_button.png')
-        this.game.load.image('flag', 'assets/Flaggy_Flag_Fixed.png');
+        this.game.load.image('flag1', 'assets/Flaggy_Flag_Fixed.png');
+        this.game.load.image('flag2', 'assets/shrink_club_and_claws.png');
+        this.game.load.image('flag3', 'assets/shrink_HI_flag.png');
+        this.game.load.image('flag4', 'assets/shrink_white_cross_flag.png');
+
         this.game.load.audio('jump_audio', 'assets/jump_sound.wav');
         this.game.load.audio('hit_audio', 'assets/grey_mad.wav');
         this.game.load.audio('Pim Poy', 'assets/Pim Poy.wav');
