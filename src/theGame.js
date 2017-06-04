@@ -1,13 +1,17 @@
-// TODO: Add mute for sounds
-// TODO: Add mute for music
 // TODO: Add mobile integration
 // TODO: Add ability to go above screen without immediately dying but not go over flags
 
 var theGame = function(game) {}
 
 theGame.prototype = {
+    
+    init: function (gtMuted) {
+        this.muted = gtMuted;
+    },
+    
     create: function() {
         
+
         this.game.add.sprite(0, 0, 'background');
         // Set betweenTime to be 0 to avoid null error later on
         this.betweenTime = 0;
@@ -25,14 +29,17 @@ theGame.prototype = {
         // Add gravity to CGP
         this.grey_head.body.gravity.y = 800;
 
+        // Set space key to jump here
         var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);
-        
-        if (this.game.input.activePointer.isDown)
+        /*if (this.game.input.activePointer.isDown)
         {
             this.jump();
-        }
-
+        }*/
+        // Set M key to mute here
+        this.mKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
+        this.mKey.onDown.add(this.changeMute, this);
+        
         this.flags = this.game.add.group();
 
         this.timer = this.game.time.events.loop(1500, this.addFlagColumn, this);
@@ -50,24 +57,34 @@ theGame.prototype = {
         this.outOfBoundsSound = this.game.add.audio('out_of_bounds_audio');
 
         this.background_music.play("", 0, 0.1, true, true);
-
         // Boolean which checks if Grey is between the flags or not
         this.isBetween = false;
+        
+        // Mute/unmute buttons NOTE: access the mute variable with this.muted
+        this.speakerSheet = this.game.add.button(360, 30, "speakers", this.changeMute, this);
+        
+        if (this.muted) {
+            this.speakerSheet.frame = 1;
+            this.game.sound.mute = true;
+        }
     },
 
     update: function() {
         this.FLAG_WIDTH = 70;
+        // This ends the game if Grey goes out of bounds
         if (this.grey_head.y < 0 || this.grey_head.y > 490) {
             if (this.grey_head.alive) {
                 this.outOfBoundsSound.play();
             }
-            this.restartGame();
+            this.endGame();
         }
 
 
 
         // Increment score if Grey is between the flags
         if (this.flags.cursor != null) {
+            // The Date.now() timing is to make sure the score is only increments once while in between flags
+            // otherwise, it would add lots of times if it checked every single frame!
             if (this.grey_head.x > this.flags.cursor.x && this.grey_head.x < this.flags.cursor.x + this.FLAG_WIDTH &&
                 this.betweenTime + 300 < Date.now()) {
                 this.isBetween = true;
@@ -121,11 +138,12 @@ theGame.prototype = {
         jumpAnimation.start();
     },
 
-    restartGame: function() {
+    endGame: function() {
         this.background_music.stop();
         this.game.state.start("GameOver", true, false, this.score);
     },
 
+    // Creates one REBEL flag, which will be added to flagColumn later
     addOneFlag: function(x, y) {
         // Create a random number between 1 and 4 inclusive since there are
         // four rebel flags and then concatenate the random number to "flag"
@@ -144,6 +162,7 @@ theGame.prototype = {
         flag.outOfBoundsKill = true;
     },
 
+    // Adds a deadly REBEL flag column which can kill Grey
     addFlagColumn: function() {
         var openSpace = Math.floor(Math.random() * 5) + 1;
 
@@ -154,6 +173,7 @@ theGame.prototype = {
         }
     },
 
+    // What to do when Grey dies on a flag
     hitFlags: function() {
         var firstTime = Date.now();
         // If Grey is not alive, then ignore the hitting of flags
@@ -182,7 +202,21 @@ theGame.prototype = {
         
         if (Date.now() - firstTime > 5000) {
             this.background_music.stop();
-            this.game.state.start("GameOver", true, false, this.score);
+            this.game.state.start("GameOver", true, false, this.score, this.muted);
+        }
+    },
+    
+    // Control whether or not the game is muted
+    changeMute: function() {
+        if (this.muted) {
+            this.speakerSheet.frame = 0;
+            this.muted = false;
+            this.game.sound.mute = false;
+        }
+        else {
+            this.speakerSheet.frame = 1;
+            this.muted = true;
+            this.game.sound.mute = true;
         }
     }
 }

@@ -19,7 +19,11 @@ preload.prototype = {
         this.game.load.image('flag2', 'assets/shrink_club_and_claws.png');
         this.game.load.image('flag3', 'assets/shrink_HI_flag.png');
         this.game.load.image('flag4', 'assets/shrink_white_cross_flag.png');
-
+        this.game.load.image('speaker_icon', 'assets/white_speaker_icon.png');
+        
+        // Load spritesheet
+        this.game.load.spritesheet('speakers', 'assets/speaker_icon_spritesheet.png', 35, 35, 2);
+        
         this.game.load.audio('jump_audio', 'assets/jump_sound.wav');
         this.game.load.audio('hit_audio', 'assets/grey_mad.wav');
         this.game.load.audio('Pim Poy', 'assets/Pim Poy.wav');
@@ -28,6 +32,8 @@ preload.prototype = {
         this.game.load.audio('out_of_bounds_audio', 'assets/Grey_Falling.wav');
 
         this.game.load.image('background', 'assets/London_Night_Background.png');
+        
+        
 	},
   	create: function(){
 		this.game.state.start("GameTitle");
