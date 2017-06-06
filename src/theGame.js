@@ -33,11 +33,6 @@ theGame.prototype = {
         var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);
         
-        // This looks for mobile jumping
-        if (this.game.input.activePointer.isDown)
-        {
-            this.jump();
-        }
         // Set M key to mute here
         this.mKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
         this.mKey.onDown.add(this.changeMute, this);
@@ -72,6 +67,13 @@ theGame.prototype = {
     },
 
     update: function() {
+        
+        // This looks for mobile jumping
+        if (this.game.input.activePointer.isDown)
+        {
+            this.jump();
+        }
+        
         this.FLAG_WIDTH = 70;
         // This ends the game if Grey goes out of bounds
         if (this.grey_head.y < 0 || this.grey_head.y > 490) {
