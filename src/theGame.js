@@ -32,10 +32,12 @@ theGame.prototype = {
         // Set space key to jump here
         var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);
-        /*if (this.game.input.activePointer.isDown)
+        
+        // This looks for mobile jumping
+        if (this.game.input.activePointer.isDown)
         {
             this.jump();
-        }*/
+        }
         // Set M key to mute here
         this.mKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
         this.mKey.onDown.add(this.changeMute, this);
