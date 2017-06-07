@@ -2,7 +2,6 @@
 // TODO: Add ability to go above screen without immediately dying but not go over flags
 
 var theGame = function(game) {}
-
 theGame.prototype = {
     
     init: function (gtMuted) {
@@ -29,9 +28,16 @@ theGame.prototype = {
         // Add gravity to CGP
         this.grey_head.body.gravity.y = 800;
 
+        /* JUMPING */
         // Set space key to jump here
         var spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);
+        
+        // This looks for mouse/mobile clicks/touches
+        this.currentPointer = this.game.input.activePointer;
+        this.game.input.onDown.add(this.jump, this);
+        
+        
         
         // Set M key to mute here
         this.mKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
@@ -40,7 +46,7 @@ theGame.prototype = {
         this.flags = this.game.add.group();
 
         this.timer = this.game.time.events.loop(1500, this.addFlagColumn, this);
-
+        
         // Handle score keeping
         this.score = 0;
         this.labelScore = this.game.add.text(20, 20, "0", {
@@ -67,12 +73,6 @@ theGame.prototype = {
     },
 
     update: function() {
-        
-        // This looks for mobile jumping
-        if (this.game.input.activePointer.isDown)
-        {
-            this.jump();
-        }
         
         this.FLAG_WIDTH = 70;
         // This ends the game if Grey goes out of bounds
