@@ -5,4 +5,8 @@ A mock Flappy Bird Game inspired by the great CGP Grey
 
 ## Screenshot from desktop
 
-![ScreenShot](Screenshots/Desktop_Website_Gameplay.png)
+![Desktop Screenshot](Screenshots/Desktop_Website_Gameplay.png)
+
+## Screenshot from mobile
+
+![Mobile Screenshot](Screenshots/Mobile_Gameplay.png)
