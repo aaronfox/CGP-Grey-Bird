@@ -4,8 +4,8 @@
 var theGame = function(game) {}
 theGame.prototype = {
     
-    init: function (gtMuted) {
-        this.muted = gtMuted;
+    init: function (muted) {
+        this.muted = muted;
     },
     
     create: function() {
@@ -144,7 +144,7 @@ theGame.prototype = {
 
     endGame: function() {
         this.background_music.stop();
-        this.game.state.start("GameOver", true, false, this.score);
+        this.game.state.start("GameOver", true, false, this.score, this.muted);
     },
 
     // Creates one REBEL flag, which will be added to flagColumn later

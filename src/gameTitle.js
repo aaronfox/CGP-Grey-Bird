@@ -17,7 +17,8 @@ gameTitle.prototype = {
         this.game.stage.backgroundColor = '#686868';
         this.pim_poy = this.game.add.audio('Pim Poy');
         this.pim_poy.play("", 0, 1, true, true);
-
+        
+        this.changeMute();
 	},
     
     changeMute: function() {
@@ -34,7 +35,7 @@ gameTitle.prototype = {
     },
     
 	playTheGame: function() {
-        this.pim_poy.stop();
+        // this.pim_poy.stop();
         // Transfer to the game when the play button is clicked, and transfer this.muted
         // to know if the game should be muted or not
 		this.game.state.start("TheGame", true, false, this.muted);

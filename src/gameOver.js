@@ -6,6 +6,7 @@ gameOver.prototype = {
 		this.endScore = score;
         this.muted = isMuted;
 	},
+    
   	create: function(){
         this.finalScore = this.game.add.text(0, 80, "0", {
             font: "23px Arial",
@@ -40,7 +41,7 @@ gameOver.prototype = {
 	},
 	playTheGame: function(){
         this.pim_poy.stop();
-		this.game.state.start("TheGame", this.muted);
+		this.game.state.start("TheGame", true, false, this.muted);
 	},
     
     changeMute: function() {
