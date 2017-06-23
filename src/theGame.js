@@ -1,4 +1,3 @@
-// TODO: Add mobile integration
 // TODO: Add ability to go above screen without immediately dying but not go over flags
 
 var theGame = function(game) {}
@@ -59,7 +58,7 @@ theGame.prototype = {
         this.background_music = this.game.add.audio('background_music');
         this.outOfBoundsSound = this.game.add.audio('out_of_bounds_audio');
 
-        this.background_music.play("", 0, 0.1, true, true);
+        this.background_music.play("", 0, 0.7, true, true);
         // Boolean which checks if Grey is between the flags or not
         this.isBetween = false;
         

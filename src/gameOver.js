@@ -24,7 +24,7 @@ gameOver.prototype = {
 		var playButton = this.game.add.button(this.game.world.centerX, 350, "play_button", this.playTheGame, this);
 		playButton.anchor.setTo(0.5);
         this.pim_poy = this.game.add.audio('Game Over Pim Poy');
-        this.pim_poy.play("", 0, 1, true, true);
+        this.pim_poy.play("", 0, 1.0, true, true);
         
         // HANDLE THE MUTING STUFF
         // Set M key to mute here
