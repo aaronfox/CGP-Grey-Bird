@@ -1,4 +1,4 @@
-<em>You can now play the game live at www.hellointernetbingo.com</em>
+<em>You can now play the game live at www.hellointernetbingo.com</em> (Well, you <em>used</em> to be able to. Unfortunately free funding of this domain has run out. :(
 
 # CGP-Grey-Bird
 A mock Flappy Bird Game inspired by the great CGP Grey
